@@ -64,6 +64,8 @@
 
 //!addtoinventory {blob} (amount) (player)
 
+//Custom roles.
+
 #include "MakeSeed.as";
 #include "MakeCrate.as";
 #include "MakeScroll.as";
@@ -75,6 +77,21 @@ void onInit(CRules@ this)
     this.addCommandID("clientshowhelp");
 	this.addCommandID("allclientshidehelp");
     this.addCommandID("announcement");
+
+    if(!isServer())
+    {
+        return;
+    }
+
+    array<ICommand@> initcommands();
+
+    this.set("ChatCommands", initcommands);
+
+
+
+
+
+
 
 
     array<ICommand@> _commands = 
@@ -132,10 +149,22 @@ void onInit(CRules@ this)
         CommandCount()//End*/
     };
 
+
+
+
+    //How to add commands in another file.
+
+    array<ICommand@> commands;
+    if(!this.get("ChatCommands", commands)){
+        error("Failed to get ChatCommands.\nThis is most likely because you tried to get it before it was created.\nMake sure ChatCommands.as is before anything else that uses it."); return;
+    }
+
     for(u16 i = 0; i < _commands.size(); i++)
     {
         commands.push_back(_commands[i]);
     }
+
+    this.set("ChatCommands", commands);
 }
 
 bool onServerProcessChat(CRules@ this, const string& in _text_in, string& out text_out, CPlayer@ player)
@@ -194,10 +223,20 @@ bool onServerProcessChat(CRules@ this, const string& in _text_in, string& out te
 		}
 	}
 
-    //print("text_in = " + text_in);
     string[]@ tokens = (text_in.substr(1, text_in.size())).split(" ");
 
     ICommand@ command = @null;
+
+    //print("text_in = " + text_in);
+    //print("tokens[0].getHash() == " + tokens[0].getHash());
+
+
+    array<ICommand@> commands;
+    if(!this.get("ChatCommands", commands))
+    {
+        error("Failed to get ChatCommands.");
+        return !this.get_bool(player.getUsername() + "_hidecom");
+    }
 
     for(u16 p = 0; p < commands.size(); p++)
     {
@@ -218,7 +257,7 @@ bool onServerProcessChat(CRules@ this, const string& in _text_in, string& out te
                     sendClientMessage(this, player, "This command is not active.");
                     return !this.get_bool(player.getUsername() + "_hidecom");
                 }
-                print("token length = " + tokens.size());
+                //print("token length = " + tokens.size());
                 @command = @commands[p];
                 break;
             }
@@ -228,6 +267,8 @@ bool onServerProcessChat(CRules@ this, const string& in _text_in, string& out te
             break;
         }
     }
+    this.set("ChatCommands", commands);
+
 
     if(command == null && (sv_test || getSecurity().checkAccess_Command(player, "admin_color")))//If this isn't a command and either sv_test is on or the player is an admin.
     {

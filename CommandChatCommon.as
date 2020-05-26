@@ -1,6 +1,6 @@
-array<ICommand@> commands();
+#define SERVER_ONLY;
 
-interface ICommand
+shared interface ICommand
 {
     void Setup(string[]@ tokens);
 
@@ -445,6 +445,7 @@ bool getAndAssignTargets(CRules@ this, CPlayer@ player, string[]@ tokens, u8 tar
 
     return true;
 }
+
 
 /*CPlayer@ findNearestPlayer(bool skipclosest, Vec2f point, f32 radius)
 {

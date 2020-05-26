@@ -1,3 +1,5 @@
+#define SERVER_ONLY;
+
 #include "CommandChatCommon.as";
 
 class AllMats : CommandBase
@@ -1468,49 +1470,34 @@ class Morph : CommandBase
     {//TODO: keep hp?
         string actor = tokens[1];
         
-        if (tokens.length > 2) 
+        if (tokens.length == 2) 
         {
-            if(target_blob == null)
-            {
-                sendClientMessage(this, player, "Can not respawn while dead, try !forcerespawn \"player\"");
-                return false;
+            @target_player = @player;
+            @target_blob = @blob; 
+        }
+            
+        if(target_blob == null)
+        {
+            sendClientMessage(this, player, "Can not respawn while dead, try !forcerespawn \"player\"");
+            return false;
+        }
+        CBlob@ newBlob = server_CreateBlob(actor, target_blob.getTeamNum(), target_blob.getPosition());
+    
+        if(newBlob != null && newBlob.getWidth() != 0.0f)
+        {						
+            if(target_blob != null) {
+                target_blob.server_Die();
             }
-            CBlob@ newBlob = server_CreateBlob(actor, target_blob.getTeamNum(), target_blob.getPosition());
-        
-            if(newBlob != null && newBlob.getWidth() != 0.0f)
-            {						
-                if(target_blob != null) {
-                    target_blob.server_Die();
-                }
-                newBlob.server_SetPlayer(target_player);
-                ParticleZombieLightning(target_blob.getPosition());
-            }
-            else
-            {
-                sendClientMessage(this, player, "Failed to spawn the \"" + actor + "\" blob");
-            }
+            newBlob.server_SetPlayer(target_player);
+            ParticleZombieLightning(target_blob.getPosition());
         }
         else
         {
-            if(blob == null)
+            if(newBlob != null)
             {
-                sendClientMessage(this, player, "Can not respawn while dead, try !forcerespawn \"player\"");
-                return false;
+                newBlob.server_Die();
             }
-            CBlob@ newBlob = server_CreateBlob(actor, team, pos);
-            if(newBlob != null && newBlob.getWidth() != 0.0f)
-            {
-                if(blob != null)
-                { 
-                    blob.server_Die();
-                }
-                newBlob.server_SetPlayer(player);
-                ParticleZombieLightning(pos); 
-            }
-            else
-            {
-                sendClientMessage(this, player, "Failed to spawn the \"" + actor + "\" blob");
-            }
+            sendClientMessage(this, player, "Failed to spawn the \"" + actor + "\" blob");
         }
 
         return true;
@@ -1812,6 +1799,9 @@ class CommandCount : CommandBase
 
     bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
+        array<ICommand@> commands;
+        this.get("ChatCommands", commands);
+
         sendClientMessage(this, player, "There are " + commands.size() + " commands");
         //TODO tell active commands.
         //TODO tell commands that this user can use  (check each one's security)
