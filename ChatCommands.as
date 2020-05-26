@@ -77,6 +77,7 @@ void onInit(CRules@ this)
     this.addCommandID("clientshowhelp");
 	this.addCommandID("allclientshidehelp");
     this.addCommandID("announcement");
+    this.addCommandID("lantern");
 
     if(!isServer())
     {
@@ -146,7 +147,8 @@ void onInit(CRules@ this)
         PlayerBlobNetID(),
         PlayerNetID(),
         Announce(),
-        CommandCount()//End*/
+        CommandCount(),
+        Lantern()//End*/
     };
 
 
@@ -450,6 +452,20 @@ void onCommand( CRules@ this, u8 cmd, CBitStream @params )
 		this.set_string("announcement", params.read_string());
 		this.set_u32("announcementtime",30 * 15 + getGameTime());//15 seconds
 	}
+    else if(cmd == this.getCommandID("lantern"))
+    {
+        CBlob@ lantern = getBlobByNetworkID(params.read_u16());
+        if(lantern !is null)
+        {
+            u8 a, r, g, b;
+            a = params.read_u8();
+            r = params.read_u8();
+            g = params.read_u8();
+            b = params.read_u8();
+            SColor color = SColor(a,r,g,b);
+            lantern.SetLightColor(color);
+        }
+    }
 }
 
 void onRestart( CRules@ this )

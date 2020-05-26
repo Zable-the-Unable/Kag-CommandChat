@@ -1807,6 +1807,33 @@ class CommandCount : CommandBase
     }
 }
 
+class Lantern : CommandBase
+{
+    void Setup(string[]@ tokens) override
+    {
+        if(names[0] == 0)
+        {
+            names[0] = "lantern".getHash();
+        }
+        minimum_parameter_count = 4;
+    }
+
+    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    {
+        CBlob@ lantern = server_CreateBlob("lantern",blob.getTeamNum(),blob.getPosition());
+        CBitStream params;
+        params.write_u16(lantern.getNetworkID());
+        params.write_u8(parseInt(tokens[1]));
+        params.write_u8(parseInt(tokens[2]));
+        params.write_u8(parseInt(tokens[3]));
+        params.write_u8(parseInt(tokens[4]));
+
+        this.SendCommand(this.getCommandID("lantern"),params);
+
+        return true;
+    }
+}
+
 //Template
 /*
 class Input_Name_Here : CommandBase
