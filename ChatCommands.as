@@ -87,11 +87,11 @@ array<ICommand@> commands =
 	Scroll(),
 	FishySchool(),
 	ChickenFlock(),
-	//ExtraCommands below here
+	//New commands are below here.
     HideCommands(),
 	ShowCommands(),
 	PlayerCount(),
-	//NextMap(),
+	NextMap(),
 	SpinEverything(),
     Test(),
 	GiveCoin(),
@@ -272,7 +272,7 @@ class AllMats : CommandBase
         CBlob@ gold = server_CreateBlob('mat_gold', -1, pos);
         gold.server_SetQuantity(100);
 
-        return false;
+        return true;
     }
 }
 
@@ -298,7 +298,7 @@ class WoodStone : CommandBase
             CBlob@ b = server_CreateBlob('mat_stone', -1, pos);
         }
 
-        return false;
+        return true;
     }
 }
 
@@ -324,7 +324,7 @@ class StoneWood : CommandBase
             CBlob@ b = server_CreateBlob('mat_wood', -1, pos);
         }
 
-        return false;
+        return true;
     }
 }
 class Wood : CommandBase
@@ -344,7 +344,7 @@ class Wood : CommandBase
     {
         CBlob@ b = server_CreateBlob('mat_wood', -1, pos);
 
-        return false;
+        return true;
     }
 }
 class Stones : CommandBase
@@ -364,7 +364,7 @@ class Stones : CommandBase
     {
         CBlob@ b = server_CreateBlob('mat_stone', -1, pos);
 
-        return false;
+        return true;
     }
 }
 class Gold : CommandBase
@@ -387,7 +387,7 @@ class Gold : CommandBase
             CBlob@ b = server_CreateBlob('mat_gold', -1, pos);
         }
 
-        return false;
+        return true;
     }
 }
 class Tree : CommandBase
@@ -407,7 +407,7 @@ class Tree : CommandBase
     {
         server_MakeSeed(pos, "tree_pine", 600, 1, 16);
 
-        return false;
+        return true;
     }
 }
 class BTree : CommandBase
@@ -427,7 +427,7 @@ class BTree : CommandBase
     {
         server_MakeSeed(pos, "tree_bushy", 400, 2, 16);
 
-        return false;
+        return true;
     }
 }
 class AllArrows : CommandBase
@@ -449,7 +449,7 @@ class AllArrows : CommandBase
         CBlob@ fire = server_CreateBlob('mat_firearrows', -1, pos);
         CBlob@ bomb = server_CreateBlob('mat_bombarrows', -1, pos);
 
-        return false;
+        return true;
     }
 }
 class Arrows : CommandBase
@@ -468,7 +468,7 @@ class Arrows : CommandBase
     {
         CBlob@ b = server_CreateBlob('mat_arrows', -1, pos);
 
-        return false;
+        return true;
     }
 }
 class AllBombs : CommandBase
@@ -491,7 +491,7 @@ class AllBombs : CommandBase
         }
         CBlob@ water = server_CreateBlob('mat_waterbombs', -1, pos);
 
-        return false;
+        return true;
     }
 }
 class Bombs : CommandBase
@@ -513,7 +513,7 @@ class Bombs : CommandBase
             CBlob@ b = server_CreateBlob('mat_bombs', -1, pos);
         }
 
-        return false;
+        return true;
     }
 }
 class SpawnWater : CommandBase
@@ -532,7 +532,7 @@ class SpawnWater : CommandBase
     {
         getMap().server_setFloodWaterWorldspace(pos, true);
 
-        return false;
+        return true;
     }
 }
 class Seed : CommandBase
@@ -551,7 +551,7 @@ class Seed : CommandBase
     {
         // crash prevention?              What? - Numan
 
-        return false;
+        return true;
     }
 }
 class Scroll : CommandBase
@@ -576,7 +576,7 @@ class Scroll : CommandBase
         }
         server_MakePredefinedScroll(pos, s);
 
-        return false;
+        return true;
     }
 }
 
@@ -599,7 +599,7 @@ class FishySchool : CommandBase
             CBlob@ b = server_CreateBlob('fishy', -1, pos);
         }
 
-        return false;
+        return true;
     }
 }
 class ChickenFlock : CommandBase
@@ -621,7 +621,7 @@ class ChickenFlock : CommandBase
             CBlob@ b = server_CreateBlob('chicken', -1, pos);
         }
 
-        return false;
+        return true;
     }
 }
 class Crate : CommandBase
@@ -650,7 +650,7 @@ class Crate : CommandBase
             server_MakeCrate("", "", 0, team, Vec2f(pos.x, pos.y - 30.0f));
         }
 
-        return false;
+        return true;
     }
 }
 
@@ -734,9 +734,14 @@ class ShowCommands : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
+        if(names[0] == 0)
+        {
+            names[0] = "commands".getHash();
+            names[1] = "showcommands".getHash();
+        }
+
+        blob_must_exist = false;
         commandtype = TODO;
-        names[0] = "commands".getHash();
-        names[1] = "showcommands".getHash();
     }
 
     bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
@@ -751,11 +756,15 @@ class HeldBlobNetID : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
+        if(names[0] == 0)
+        {
+            names[0] = "heldblobnetid".getHash();
+            names[1] = "heldblobid".getHash();
+            names[2] = "heldid".getHash();
+        }
+        
         blob_must_exist = true;
         commandtype = Debug;
-        names[0] = "heldblobnetid".getHash();
-        names[1] = "heldblobid".getHash();
-        names[2] = "heldid".getHash();
     }
 
     bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
@@ -778,9 +787,15 @@ class PlayerNetID : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
+        if(names[0] == 0)
+        {
+            names[0] = "playerid".getHash();
+            names[1] = "playernetid".getHash();
+        }
+        
+        blob_must_exist = false;
         commandtype = Debug;
-        names[0] = "playerid".getHash();
-        names[1] = "playernetid".getHash();
+        
         
         if(tokens.size() > 1)
         {
@@ -807,8 +822,11 @@ class PlayerBlobNetID : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "playerblobnetid".getHash();
-        names[1] = "playerblobid".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "playerblobnetid".getHash();
+            names[1] = "playerblobid".getHash();
+        }
 
         commandtype = Debug;
         
@@ -816,10 +834,7 @@ class PlayerBlobNetID : CommandBase
         {
             target_player_slot = 1;
             target_player_blob_param = true;
-        }
-        else
-        {
-            blob_must_exist = true;
+            blob_must_exist = false;
         }
     }
 
@@ -842,8 +857,13 @@ class PlayerCount : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
+        if(names[0] == 0)
+        {
+            names[0] = "playercount".getHash();
+        }
+        
+        blob_must_exist = false;
         commandtype = Info;
-        names[0] = "playercount".getHash();
     }
 
     bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
@@ -864,7 +884,11 @@ class Announce : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "announce".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "announce".getHash();
+        }
+        
 
         blob_must_exist = false;
         no_sv_test = true;
@@ -898,7 +922,10 @@ class TagPlayerBlob : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "tagplayerblob".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "tagplayerblob".getHash();
+        }
 
         permlevel = Admin;
         minimum_parameter_count = 3;
@@ -906,12 +933,9 @@ class TagPlayerBlob : CommandBase
 
         if(tokens.size() > 4)
         {
+            blob_must_exist = false;
             target_player_slot = 4;
             target_player_blob_param = true;
-        }
-        else
-        {
-            blob_must_exist = true;
         }
     }
 
@@ -959,8 +983,12 @@ class TagBlob : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "tagblob".getHash();
-
+        if(names[0] == 0)
+        {
+            names[0] = "tagblob".getHash();
+        }
+        
+        blob_must_exist = false;
         permlevel = Admin;
         minimum_parameter_count = 4;
         commandtype = Debug;
@@ -1013,8 +1041,12 @@ class HideCommands : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "hidecommands".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "hidecommands".getHash();
+        }
         
+        blob_must_exist = false;
         permlevel = SuperAdmin;
         no_sv_test = true;
         commandtype = Template;
@@ -1026,8 +1058,14 @@ class HideCommands : CommandBase
         bool hidecom = false;
         if(this.get_bool(player.getUsername() + "_hidecom") == false)
         {
+            sendClientMessage(this, player, "Commands hidden");
             hidecom = true;
         }
+        else
+        {
+            sendClientMessage(this, player, "Commands unhidden");
+        }
+        
         
         this.set_bool(player.getUsername() + "_hidecom", hidecom);
         return false;
@@ -1038,8 +1076,12 @@ class SpinEverything : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "spineverything".getHash();
-
+        if(names[0] == 0)
+        {
+            names[0] = "spineverything".getHash();
+        }
+        
+        blob_must_exist = false;
         permlevel = SuperAdmin;
         commandtype = Template;
     }
@@ -1070,8 +1112,12 @@ class SetTime : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "settime".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "settime".getHash();
+        }
 
+        blob_must_exist = false;
         permlevel = SuperAdmin;
         minimum_parameter_count = 1;
         commandtype = Template;
@@ -1090,8 +1136,12 @@ class GiveCoin : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "givecoin".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "givecoin".getHash();
+        }
 
+        blob_must_exist = false;
         target_player_slot = 2;//This command requires a player on the second argument (for this it would be !givecoin 10 xXGamerXx)
         minimum_parameter_count = 2;
         commandtype = Template;
@@ -1121,9 +1171,13 @@ class PrivateMessage : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "pm".getHash();
-        names[1] = "privatemessage".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "pm".getHash();
+            names[1] = "privatemessage".getHash();
+        }
 
+        blob_must_exist = false;
         target_player_slot = 1;
         minimum_parameter_count = 2;
         commandtype = Template;
@@ -1154,10 +1208,15 @@ class Ban : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "ban".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "ban".getHash();
+        }
+        
 
         permlevel = pBan;
         
+        blob_must_exist = false;
         target_player_slot = 1;
         minimum_parameter_count = 1;
         commandtype = Template;
@@ -1187,8 +1246,13 @@ class Unban : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "unban".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "unban".getHash();
+        }
         
+        
+        blob_must_exist = false;
         permlevel = punBan;
         commandtype = Template;
         minimum_parameter_count = 1;
@@ -1215,11 +1279,16 @@ class Kick : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "kickp".getHash();//TODO, accept !kick and explain that they might be looking for !kickp
+        if(names[0] == 0)
+        {
+            names[0] = "kickp".getHash();//TODO, accept !kick and explain that they might be looking for !kickp
+        }
 
+        
         permlevel = pKick;
         commandtype = Template;
 
+        blob_must_exist = false;
         target_player_slot = 1;
         minimum_parameter_count = 1;
     }
@@ -1242,11 +1311,15 @@ class Freeze : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "freeze".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "freeze".getHash();
+        }
 
         permlevel = pFreeze;
         commandtype = Template;
         
+        blob_must_exist = false;
         target_player_slot = 1;
         minimum_parameter_count = 1;
     }
@@ -1268,12 +1341,17 @@ class NextMap : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "nextmap".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "nextmap".getHash();
+        }
+        
 
         active = false;//Command will not work.
 
         permlevel = Admin;
 
+        blob_must_exist = false;
         commandtype = Template;
     }
 
@@ -1289,24 +1367,23 @@ class Team : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "team".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "team".getHash();
+        }
 
         permlevel = Admin;
         commandtype = Template;
         
         if(tokens.length > 2)
         {
+            blob_must_exist = false;
             target_player_slot = 2;
             target_player_blob_param = true;
         }
-        else if(tokens.length > 1)
-        {
-            blob_must_exist = true;
-        }
-        else
+        else if (tokens.length == 1)
         {
             permlevel = 0;
-            blob_must_exist = true;
         }
     }
 
@@ -1337,7 +1414,10 @@ class PlayerTeam : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "playerteam".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "playerteam".getHash();
+        }
 
         permlevel = Admin;
         commandtype = Template;
@@ -1381,9 +1461,14 @@ class ChangeName : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "changename".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "changename".getHash();
+        }
+        
 
         commandtype = Template;
+        blob_must_exist = false;
         minimum_parameter_count = 1;
 
         if(tokens.length > 2)
@@ -1412,8 +1497,12 @@ class Teleport : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "teleport".getHash();
-        names[1] = "tp".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "teleport".getHash();
+            names[1] = "tp".getHash();
+        }
+        
 
         target_player_slot = 1;
 		target_player_blob_param = true;//This command requires the targets blob
@@ -1475,8 +1564,13 @@ class Teleport : CommandBase
                 sendClientMessage(this, player, "The second specified player " + tokens[2] + " was not found");
             }
         }
-        else if (blob != null)
+        else 
         {
+            if (blob == null)
+            {
+                sendClientMessage(this, player, "You cannot teleport your blob to this player as you have no blob.");
+                return false;
+            }
             Vec2f target_pos = target_blob.getPosition();
             target_pos.y -= 5;
 
@@ -1495,15 +1589,19 @@ class Coin : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "coin".getHash();
-
+        if(names[0] == 0)
+        {
+            names[0] = "coin".getHash();
+        }
+        
         permlevel = Admin;
         commandtype = Template;
+        blob_must_exist = false;
         minimum_parameter_count = 1;
+        
 
         if(tokens.length > 2)//This command is optional
         {
-            blob_must_exist = false;
             target_player_slot = 2;
         }
     }
@@ -1528,7 +1626,10 @@ class Damage : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "damage".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "damage".getHash();
+        }
 
         permlevel = Admin;
         commandtype = Template;
@@ -1554,11 +1655,10 @@ class Damage : CommandBase
         { 
             target_blob.server_Hit(target_blob, target_blob.getPosition(), Vec2f(0, 0), damage, 0);
         }
-        else if (blob != null)
+        else
         {
             blob.server_Hit(blob, blob.getPosition(), Vec2f(0, 0), damage, 0);
         }
-
         return true;
     }
 }
@@ -1567,13 +1667,18 @@ class Kill : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
+        if(names[0] == 0)
+        {
+            names[0] = "kill".getHash();
+        }
+
         permlevel = Admin;
+        blob_must_exist = false;
         target_player_slot = 1;
         target_player_blob_param = true;
     
         minimum_parameter_count = 1;
         commandtype = Template;
-        names[0] = "kill".getHash();
     }
 
     bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
@@ -1665,10 +1770,12 @@ class AddRobot : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "addbot".getHash();
-        names[1] = "bot".getHash();
-        names[2] = "createbot".getHash();
-
+        if(names[0] == 0)
+        {
+            names[0] = "addbot".getHash();
+            names[1] = "bot".getHash();
+            names[2] = "createbot".getHash();
+        }
         blob_must_exist = false;
 
         permlevel = Admin;
@@ -1766,11 +1873,15 @@ class ForceRespawn : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "forcerespawn".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "forcerespawn".getHash();
+        }
 
         permlevel = Admin;
         if(tokens.length > 1)
         {
+            blob_must_exist = false;
             target_player_slot = 1;
         }
         commandtype = Template;
@@ -1842,12 +1953,14 @@ class Give : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "give".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "give".getHash();
+        }
 
         permlevel = Admin;
         minimum_parameter_count = 1;
         commandtype = Template;
-        blob_must_exist = true;
 
         if(tokens.length > 3)
         {
@@ -1897,7 +2010,10 @@ class SetHp : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "sethp".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "sethp".getHash();
+        }
 
         permlevel = Admin;
 
@@ -1933,7 +2049,12 @@ class CommandCount : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "commandcount".getHash();
+        if(names[0] == 0)
+        {
+            names[0] = "commandcount".getHash();
+        }
+        
+        blob_must_exist = false;
         commandtype = Template;
     }
 
@@ -1941,24 +2062,30 @@ class CommandCount : CommandBase
     {
         sendClientMessage(this, player, "There are " + commands.size() + " commands");
         //TODO tell active commands.
+        //TODO tell commands that this user can use  (check each one's security)
         return true;
     }
 }
 
 //Template
 /*
-class  : CommandBase
+class Input_Name_Here : CommandBase
 {
     void Setup(string[]@ tokens) override
     {
-        names[0] = "".getHash();
-        permlevel = Admin;
+        if(names[0] == 0)//Happens only once
+        {
+            names[0] = "Input_Name_Here".getHash();
+        }
+
+        permlevel = Admin;//Requires adminship
+        
         commandtype = Template;
     }
 
     bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
-        
+        //Code when the command runs happens here
         return true;
     }
 }
@@ -2069,7 +2196,7 @@ bool onServerProcessChat(CRules@ this, const string& in _text_in, string& out te
         array<int> _names = commands[p].get_Names(); 
         if(_names.size() == 0)
         {
-            error("A command did not have a name to go by");
+            error("A command did not have a name to go by. Please add a name to this command");
             return false;
         }
         for(u16 name = 0; name < _names.size(); name++)
@@ -2121,7 +2248,12 @@ bool onServerProcessChat(CRules@ this, const string& in _text_in, string& out te
     if(command.get_NoSvTest())
     {
         sv_test = false;
-    }   
+    }
+
+    if(command.inGamemode() == this.gamemode_name)
+    {
+        sv_test = true;
+    }
 
     u8 permlevel;//what level of adminship you need to use this command
     permlevel = command.get_PermLevel();
