@@ -1,5 +1,3 @@
-#define SERVER_ONLY;
-
 shared interface ICommand
 {
     void Setup(string[]@ tokens);

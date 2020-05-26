@@ -1,5 +1,3 @@
-#define SERVER_ONLY;
-
 #include "CommandChatCommon.as";
 
 class AllMats : CommandBase

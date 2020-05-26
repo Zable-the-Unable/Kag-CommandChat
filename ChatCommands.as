@@ -156,7 +156,7 @@ void onInit(CRules@ this)
 
     array<ICommand@> commands;
     if(!this.get("ChatCommands", commands)){
-        error("Failed to get ChatCommands.\nThis is most likely because you tried to get it before it was created.\nMake sure ChatCommands.as is before anything else that uses it."); return;
+        error("Failed to get ChatCommands.\nMake sure ChatCommands.as is before anything else that uses it in gamemode.cfg."); return;
     }
 
     for(u16 i = 0; i < _commands.size(); i++)
