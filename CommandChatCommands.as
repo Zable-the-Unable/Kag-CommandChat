@@ -13,7 +13,7 @@ class AllMats : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CBlob@ wood = server_CreateBlob('mat_wood', -1, pos);
         wood.server_SetQuantity(500); // so I don't have to repeat the server_CreateBlob line again
@@ -41,7 +41,7 @@ class WoodStone : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CBlob@ b = server_CreateBlob('mat_wood', -1, pos);
 
@@ -67,7 +67,7 @@ class StoneWood : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CBlob@ b = server_CreateBlob('mat_stone', -1, pos);
 
@@ -92,7 +92,7 @@ class Wood : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CBlob@ b = server_CreateBlob('mat_wood', -1, pos);
 
@@ -112,7 +112,7 @@ class Stones : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CBlob@ b = server_CreateBlob('mat_stone', -1, pos);
 
@@ -132,7 +132,7 @@ class Gold : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         for (int i = 0; i < 4; i++)
         {
@@ -155,7 +155,7 @@ class Tree : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         server_MakeSeed(pos, "tree_pine", 600, 1, 16);
 
@@ -175,7 +175,7 @@ class BTree : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         server_MakeSeed(pos, "tree_bushy", 400, 2, 16);
 
@@ -194,7 +194,7 @@ class AllArrows : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CBlob@ normal = server_CreateBlob('mat_arrows', -1, pos);
         CBlob@ water = server_CreateBlob('mat_waterarrows', -1, pos);
@@ -216,7 +216,7 @@ class Arrows : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CBlob@ b = server_CreateBlob('mat_arrows', -1, pos);
 
@@ -235,7 +235,7 @@ class AllBombs : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         for (int i = 0; i < 2; i++)
         {
@@ -258,7 +258,7 @@ class Bombs : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         for (int i = 0; i < 3; i++)
         {
@@ -280,7 +280,7 @@ class SpawnWater : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         getMap().server_setFloodWaterWorldspace(pos, true);
 
@@ -299,7 +299,7 @@ class Seed : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         // crash prevention?              What? - Numan
 
@@ -319,7 +319,7 @@ class Scroll : CommandBase
         minimum_parameter_count = 1;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         string s = tokens[1];
         for (uint i = 2; i < tokens.length; i++)
@@ -344,7 +344,7 @@ class FishySchool : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         for (int i = 0; i < 12; i++)
         {
@@ -366,7 +366,7 @@ class ChickenFlock : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         for (int i = 0; i < 12; i++)
         {
@@ -388,7 +388,7 @@ class Crate : CommandBase
         commandtype = Legacy;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if(tokens.size() > 1)
         {
@@ -398,7 +398,7 @@ class Crate : CommandBase
         }
         else
         {
-            sendClientMessage(this, player, "usage: !crate BLOBNAME [DESCRIPTION]"); //e.g., !crate shark Your Little Darling
+            sendClientMessage(rules, player, "usage: !crate BLOBNAME [DESCRIPTION]"); //e.g., !crate shark Your Little Darling
             server_MakeCrate("", "", 0, team, Vec2f(pos.x, pos.y - 30.0f));
         }
 
@@ -446,9 +446,9 @@ class Test : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
-        sendClientMessage(this, player, "You just used the test command.");//This method sends a message to the specified player. the "player" variable is the player that used the !test command.
+        sendClientMessage(rules, player, "You just used the test command.");//This method sends a message to the specified player. the "player" variable is the player that used the !test command.
 
         if(tokens.length > 1)//If there is more than a single token. The first token is command itself, and the second token is the number in this case.
         {
@@ -456,17 +456,17 @@ class Test : CommandBase
 
             u8 number = parseInt(string_number);//We take the very first parameter and turn it into an int variable with the name "number".
             
-            sendClientMessage(this, player, "There is a parameter specified. The first parameter is: " + number);//Message the player that sent this command this.
+            sendClientMessage(rules, player, "There is a parameter specified. The first parameter is: " + number);//Message the player that sent this command this.
 
             if (tokens.length > 2)//If there are more than two tokens. The first token is the command itself, the second is the number, the third is the specified player.
             {
-                sendClientMessage(this, player, "There are two parameters specified, the second parameter is: " + tokens[2], SColor(255, 0, 0, 153));//This time we specify a color.
+                sendClientMessage(rules, player, "There are two parameters specified, the second parameter is: " + tokens[2], SColor(255, 0, 0, 153));//This time we specify a color.
             
                 //Tip, you do not need to check if the target_player or target_blob exist, that is already handled by something else.
 
                 target_blob.server_setTeamNum(number);//As we specified the target_player_blob_param = true; when there are more than two tokens, we have the blob of the target_player right here.
 
-                sendClientMessage(this, target_player, "Your team has been changed to " + number + " by " + player.getUsername() + " who is on team " + team);//This sends a message to the target_player
+                sendClientMessage(rules, target_player, "Your team has been changed to " + number + " by " + player.getUsername() + " who is on team " + team);//This sends a message to the target_player
             }
 
             //If there is only 1 parameter (2 tokens) do this.
@@ -496,10 +496,10 @@ class ShowCommands : CommandBase
         commandtype = TODO;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CBitStream params;
-        this.SendCommand(this.getCommandID("clientshowhelp"), params, player);
+        rules.SendCommand(rules.getCommandID("clientshowhelp"), params, player);
         return false;
     }
 }
@@ -519,16 +519,16 @@ class HeldBlobNetID : CommandBase
         commandtype = Debug;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CBlob@ held_blob = blob.getCarriedBlob();
         if(held_blob != null)
         {
-            sendClientMessage(this, player, "NetID: " + held_blob.getNetworkID());
+            sendClientMessage(rules, player, "NetID: " + held_blob.getNetworkID());
         }
         else
         {
-            sendClientMessage(this, player, "Held blob not found.");
+            sendClientMessage(rules, player, "Held blob not found.");
         }
 
         return true;
@@ -555,15 +555,15 @@ class PlayerNetID : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if(tokens.length > 1)
         {
-            sendClientMessage(this, player, "NetID: " + target_player.getNetworkID());
+            sendClientMessage(rules, player, "NetID: " + target_player.getNetworkID());
         }
         else
         {
-            sendClientMessage(this, player, "NetID: " + player.getNetworkID());
+            sendClientMessage(rules, player, "NetID: " + player.getNetworkID());
         }
 
         return true;
@@ -590,15 +590,15 @@ class PlayerBlobNetID : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if(tokens.length > 1)
         {
-            sendClientMessage(this, player, "NetID: " + target_blob.getNetworkID());
+            sendClientMessage(rules, player, "NetID: " + target_blob.getNetworkID());
         }
         else
         {
-            sendClientMessage(this, player, "NetID: " + blob.getNetworkID());
+            sendClientMessage(rules, player, "NetID: " + blob.getNetworkID());
         }
 
         return true;
@@ -618,14 +618,14 @@ class PlayerCount : CommandBase
         commandtype = Info;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         uint16 playercount = getPlayerCount();
         if(playercount > 1) {
-            sendClientMessage(this, player, "There are " + getPlayerCount() + " Players here.");
+            sendClientMessage(rules, player, "There are " + getPlayerCount() + " Players here.");
         }
         else {
-            sendClientMessage(this, player, "It's just you.");
+            sendClientMessage(rules, player, "It's just you.");
         }
 
         return true;
@@ -648,7 +648,7 @@ class Announce : CommandBase
         commandtype = Template;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         string text_in;
         for(u16 i = 0; i < tokens.size(); i++)
@@ -664,7 +664,7 @@ class Announce : CommandBase
         }
         CBitStream params;
         params.write_string(text_in.substr(tokens[0].length()));
-        this.SendCommand(this.getCommandID("announcement"), params);
+        rules.SendCommand(rules.getCommandID("announcement"), params);
 
         return true;
     }
@@ -691,7 +691,7 @@ class TagPlayerBlob : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         string message = "";
         if(tokens.length > 4)
@@ -724,7 +724,7 @@ class TagPlayerBlob : CommandBase
 
         if(message != "")
         {
-            sendClientMessage(this, player, message);
+            sendClientMessage(rules, player, message);
         }
 
         return true;
@@ -746,7 +746,7 @@ class TagBlob : CommandBase
         commandtype = Debug;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         u16 netid = parseInt(tokens[4]);
 
@@ -782,7 +782,7 @@ class TagBlob : CommandBase
 
         if(message != "")
         {
-            sendClientMessage(this, player, message);
+            sendClientMessage(rules, player, message);
         }
 
         return true;
@@ -804,22 +804,22 @@ class HideCommands : CommandBase
         commandtype = Template;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         //I'd like feedback on this, should people be able to hide their own commands? - Numan
         bool hidecom = false;
-        if(this.get_bool(player.getUsername() + "_hidecom") == false)
+        if(rules.get_bool(player.getUsername() + "_hidecom") == false)
         {
-            sendClientMessage(this, player, "Commands hidden");
+            sendClientMessage(rules, player, "Commands hidden");
             hidecom = true;
         }
         else
         {
-            sendClientMessage(this, player, "Commands unhidden");
+            sendClientMessage(rules, player, "Commands unhidden");
         }
         
         
-        this.set_bool(player.getUsername() + "_hidecom", hidecom);
+        rules.set_bool(player.getUsername() + "_hidecom", hidecom);
         return false;
     }
 }
@@ -838,7 +838,7 @@ class SpinEverything : CommandBase
         commandtype = Template;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         uint32 rotationvelocity = 100;
         if(tokens.length > 1)
@@ -875,7 +875,7 @@ class SetTime : CommandBase
         commandtype = Template;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         float time = parseFloat(tokens[1]);
         getMap().SetDayTime(time);
@@ -899,7 +899,7 @@ class GiveCoin : CommandBase
         commandtype = Template;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         uint32 coins = parseInt(tokens[1]);
 
@@ -907,11 +907,11 @@ class GiveCoin : CommandBase
         {
             player.server_setCoins(player.getCoins() - coins);
             target_player.server_setCoins(target_player.getCoins() + coins);
-            sendClientMessage(this, player, "You gave " + coins + " Coins To " + target_player.getCharacterName());
+            sendClientMessage(rules, player, "You gave " + coins + " Coins To " + target_player.getCharacterName());
         }
         else
         {
-            sendClientMessage(this, player, "You don't have enough coins");
+            sendClientMessage(rules, player, "You don't have enough coins");
             return false;
         }
 
@@ -937,7 +937,7 @@ class PrivateMessage : CommandBase
         minimum_parameter_count = 2;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         string messagefrom = "pm from " + player.getUsername() + ": ";
         string message = "";
@@ -947,8 +947,8 @@ class PrivateMessage : CommandBase
         }
         if(message != "")
         {
-            sendClientMessage(this, target_player, messagefrom + message, SColor(255, 0, 0, 153));
-            sendClientMessage(this, player, "Your message \" " + message + "\"has been sent");
+            sendClientMessage(rules, target_player, messagefrom + message, SColor(255, 0, 0, 153));
+            sendClientMessage(rules, player, "Your message \" " + message + "\"has been sent");
             return false;
         }
 
@@ -974,12 +974,12 @@ class Ban : CommandBase
         commandtype = Template;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CSecurity@ security = getSecurity();
         if(security.checkAccess_Feature(target_player, "ban_immunity"))
         {
-            sendClientMessage(this, player, "This player has ban immunity");//Check for kick immunity    
+            sendClientMessage(rules, player, "rules player has ban immunity");//Check for kick immunity    
             return false;
         }
         uint32 ban_length = 60;
@@ -988,7 +988,7 @@ class Ban : CommandBase
             ban_length = parseInt(tokens[2]);
         }
         security.ban(target_player, ban_length);
-        sendClientMessage(this, player, "Player " + target_player.getUsername() + " has been banned for " + ban_length + " minutes");//Check for ban immunity
+        sendClientMessage(rules, player, "Player " + target_player.getUsername() + " has been banned for " + ban_length + " minutes");//Check for ban immunity
 
         return true;
     }
@@ -1010,17 +1010,17 @@ class Unban : CommandBase
         minimum_parameter_count = 1;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         CSecurity@ security = getSecurity();
         /*if(security.isPlayerBanned(tokens[1]))
         {*/
             security.unBan(tokens[1]);
-            sendClientMessage(this, player, "Player " + tokens[1] + " has been unbanned");
+            sendClientMessage(rules, player, "Player " + tokens[1] + " has been unbanned");
         /*}
         else
         {
-            sendClientMessage(this, player, "Specified banned player not found, i.e nobody with this username is banned");
+            sendClientMessage(rules, player, "Specified banned player not found, i.e nobody with this username is banned");
         }*///Fix me later numan
 
         return true;
@@ -1045,15 +1045,15 @@ class Kick : CommandBase
         minimum_parameter_count = 1;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if(getSecurity().checkAccess_Feature(target_player, "kick_immunity"))
         {
-            sendClientMessage(this, player, "This player has kick immunity");//Check for kick immunity    
+            sendClientMessage(rules, player, "rules player has kick immunity");//Check for kick immunity    
             return false;
         }
         KickPlayer(target_player);
-        sendClientMessage(this, player, "Player " + tokens[1] + " has been kicked");//Check for kick immunity
+        sendClientMessage(rules, player, "Player " + tokens[1] + " has been kicked");//Check for kick immunity
 
         return true;
     }
@@ -1076,11 +1076,11 @@ class Freeze : CommandBase
         minimum_parameter_count = 1;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if(getSecurity().checkAccess_Feature(target_player, "freeze_immunity"))
         {
-            sendClientMessage(this, player, "This player has freeze immunity");//Check for kick immunity    
+            sendClientMessage(rules, player, "This player has freeze immunity");//Check for kick immunity    
             return false;
         }
         target_player.freeze = !target_player.freeze;
@@ -1107,7 +1107,7 @@ class NextMap : CommandBase
         commandtype = Template;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         LoadNextMap();
 
@@ -1139,11 +1139,11 @@ class Team : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if(tokens.length == 1)
         {
-            sendClientMessage(this, player, "Your controlled blob's team is " + blob.getTeamNum());
+            sendClientMessage(rules, player, "Your controlled blob's team is " + blob.getTeamNum());
             return false;
         }
 
@@ -1185,11 +1185,11 @@ class PlayerTeam : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if(tokens.length == 1)
         {
-            sendClientMessage(this, player, "Your player team is " + player.getTeamNum());
+            sendClientMessage(rules, player, "Your player team is " + player.getTeamNum());
             return false;
         }
 
@@ -1230,7 +1230,7 @@ class ChangeName : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if (tokens.length > 2)
         {
@@ -1266,13 +1266,13 @@ class Teleport : CommandBase
         blob_must_exist = false;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if(tokens.length > 2)
         {
             //if(target_player.isBot())
             //{
-            //    sendClientMessage(this, player, "You can not teleport a bot.");
+            //    sendClientMessage(rules, player, "You can not teleport a bot.");
             //    return false;
             //}
             
@@ -1284,12 +1284,12 @@ class Teleport : CommandBase
                 {
                     playernames += " : " + target_players[i].getUsername();// put their name in a string
                 }
-                sendClientMessage(this, player, "There is more than one possible player for the second player param" + playernames);//tell the client that these players in the string were found
+                sendClientMessage(rules, player, "There is more than one possible player for the second player param" + playernames);//tell the client that these players in the string were found
                 return false;//don't send the message to chat, don't do anything else
             }
             else if(target_players == null || target_players.length == 0)
             {
-                sendClientMessage(this, player, "No player was found for the second player param.");
+                sendClientMessage(rules, player, "No player was found for the second player param.");
                 return false;
             }
 
@@ -1308,19 +1308,19 @@ class Teleport : CommandBase
 
                     params.write_u16(target_player.getNetworkID());
                     params.write_Vec2f(target_postwo);
-                    this.SendCommand(this.getCommandID("teleport"), params);
+                    rules.SendCommand(rules.getCommandID("teleport"), params);
                 }
             }
             else
             {
-                sendClientMessage(this, player, "The second specified player " + tokens[2] + " was not found");
+                sendClientMessage(rules, player, "The second specified player " + tokens[2] + " was not found");
             }
         }
         else 
         {
             if (blob == null)
             {
-                sendClientMessage(this, player, "You cannot teleport your blob to this player as you have no blob.");
+                sendClientMessage(rules, player, "You cannot teleport your blob to this player as you have no blob.");
                 return false;
             }
             Vec2f target_pos = target_blob.getPosition();
@@ -1330,7 +1330,7 @@ class Teleport : CommandBase
             
             params.write_u16(player.getNetworkID());
             params.write_Vec2f(target_pos);
-            this.SendCommand(this.getCommandID("teleport"), params);
+            rules.SendCommand(rules.getCommandID("teleport"), params);
         }
 
         return true;
@@ -1358,7 +1358,7 @@ class Coin : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         int coin = parseInt(tokens[1]);
         if (tokens.length > 2) 
@@ -1395,12 +1395,12 @@ class Damage : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         float damage = parseFloat(tokens[1]);
         if(damage < 0.0)
         {
-            sendClientMessage(this, player, "You can not apply negative damage");
+            sendClientMessage(rules, player, "You can not apply negative damage");
             return false;
         }
         if (tokens.length > 2)
@@ -1433,7 +1433,7 @@ class Kill : CommandBase
         commandtype = Template;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         target_blob.server_Die();
 
@@ -1464,7 +1464,7 @@ class Morph : CommandBase
     
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {//TODO: keep hp?
         string actor = tokens[1];
         
@@ -1476,7 +1476,7 @@ class Morph : CommandBase
             
         if(target_blob == null)
         {
-            sendClientMessage(this, player, "Can not respawn while dead, try !forcerespawn \"player\"");
+            sendClientMessage(rules, player, "Can not respawn while dead, try !forcerespawn \"player\"");
             return false;
         }
         CBlob@ newBlob = server_CreateBlob(actor, target_blob.getTeamNum(), target_blob.getPosition());
@@ -1495,7 +1495,7 @@ class Morph : CommandBase
             {
                 newBlob.server_Die();
             }
-            sendClientMessage(this, player, "Failed to spawn the \"" + actor + "\" blob");
+            sendClientMessage(rules, player, "Failed to spawn the \"" + actor + "\" blob");
         }
 
         return true;
@@ -1519,7 +1519,7 @@ class AddRobot : CommandBase
         commandtype = Template;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if(tokens.length == 1)
         {
@@ -1564,7 +1564,7 @@ class AddRobot : CommandBase
             {
                 if(blob == null)
                 {
-                    sendClientMessage(this, player, "Your blob does not exist to let a blob spawn on you.");
+                    sendClientMessage(rules, player, "Your blob does not exist to let a blob spawn on you.");
                     return false;
                 }
                 if(bot_actor == "")
@@ -1624,7 +1624,7 @@ class ForceRespawn : CommandBase
         commandtype = Template;
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         if(tokens.length == 1)
         {
@@ -1707,7 +1707,7 @@ class Give : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         int quantity = 1;
 
@@ -1766,7 +1766,7 @@ class SetHp : CommandBase
         }
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         float health = parseFloat(tokens[1]);
         if (tokens.length > 2) 
@@ -1782,25 +1782,25 @@ class SetHp : CommandBase
     }
 }
 
+//!commandcount
 class CommandCount : CommandBase
 {
-    void Setup(string[]@ tokens) override
+    CommandCount()
     {
-        if(names[0] == 0)
-        {
-            names[0] = "commandcount".getHash();
-        }
-        
-        blob_must_exist = false;
-        commandtype = Template;
+        names[0] = "commandcount".getHash();
     }
 
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
+    void Setup(string[]@ tokens) override
+    {
+        blob_must_exist = false;
+    }
+
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob) override
     {
         array<ICommand@> commands;
-        this.get("ChatCommands", commands);
+        rules.get("ChatCommands", commands);
 
-        sendClientMessage(this, player, "There are " + commands.size() + " commands");
+        sendClientMessage(rules, player, "There are " + commands.size() + " commands");
         //TODO tell active commands.
         //TODO tell commands that this user can use  (check each one's security)
         return true;
