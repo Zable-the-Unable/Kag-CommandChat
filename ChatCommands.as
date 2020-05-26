@@ -66,6 +66,8 @@
 
 //Custom roles.
 
+//!team playerusername should print out player team
+
 #include "MakeSeed.as";
 #include "MakeCrate.as";
 #include "MakeScroll.as";
@@ -272,6 +274,7 @@ bool onServerProcessChat(CRules@ this, const string& in _text_in, string& out te
     this.set("ChatCommands", commands);
 
 
+    
     if(command == null && (sv_test || getSecurity().checkAccess_Command(player, "admin_color")))//If this isn't a command and either sv_test is on or the player is an admin.
     {
         string name = text_in.substr(1, text_in.size());
@@ -282,71 +285,17 @@ bool onServerProcessChat(CRules@ this, const string& in _text_in, string& out te
         return !this.get_bool(player.getUsername() + "_hidecom");
     }
 
+
+
+
     if(command == null)
     {
         return !this.get_bool(player.getUsername() + "_hidecom");
     }
 
-    if(command.get_BlobMustExist())
+    //Confirm that this command can be used
+    if(!command.canUseCommand(this, tokens, player, blob))
     {
-        if(blob == null)
-        {
-            sendClientMessage(this, player, "Your blob appears to be null, this command will not work unless your blob actually exists.");
-            return !this.get_bool(player.getUsername() + "_hidecom");
-        }
-    }
-
-    if(command.get_NoSvTest())
-    {
-        sv_test = false;
-    }
-
-    if(command.inGamemode() == this.gamemode_name)
-    {
-        sv_test = true;
-    }
-
-    u8 permlevel;//what level of adminship you need to use this command
-    permlevel = command.get_PermLevel();
-
-    if(permlevel == Moderator && !player.isMod() && !sv_test)
-    {
-        sendClientMessage(this, player, "You must be a moderator or higher to use this command.");
-        return true;
-    }
-    if(permlevel == Admin && !getSecurity().checkAccess_Command(player, "admin_color") && !sv_test)
-    {
-        sendClientMessage(this, player, "You must be a admin or higher to use this command.");
-        return true;
-    }
-    if(permlevel == SuperAdmin && !getSecurity().checkAccess_Command(player, "ALL") && !sv_test)
-    {
-        sendClientMessage(this, player, "You must be a superadmin to use this command.");
-        return true;
-    }
-    if(permlevel == pFreeze && (!getSecurity().checkAccess_Command(player, "freezeid") || !getSecurity().checkAccess_Command(player, "unfreezeid")))
-    {
-        sendClientMessage(this, player, "You do not sufficient permissions to freeze and unfreeze a player.");
-        return true;
-    }
-    if(permlevel == pKick && !getSecurity().checkAccess_Command(player, "kick"))
-    {
-        sendClientMessage(this, player, "You do not sufficient permissions to kick a player.");
-        return true;
-    }
-    if(permlevel == punBan && !getSecurity().checkAccess_Command(player, "unban")){
-        sendClientMessage(this, player, "You do not sufficient permissions to unban a player.");
-        return true;
-    }
-    if(permlevel == pBan && !getSecurity().checkAccess_Command(player, "ban")){
-        sendClientMessage(this, player, "You do not sufficient permissions to ban a player.");
-        return true;
-    }
-
-
-    if(tokens.size() < command.get_MinimumParameterCount() + 1)
-    {
-        sendClientMessage(this, player, "This command requires at least " + command.get_MinimumParameterCount() + " parameters.");
         return !this.get_bool(player.getUsername() + "_hidecom");
     }
 
@@ -355,11 +304,12 @@ bool onServerProcessChat(CRules@ this, const string& in _text_in, string& out te
     CPlayer@ target_player;
     CBlob@ target_blob;
 
+    //If the command wants target_player
     if(command.get_TargetPlayerSlot() != 0)
-    {
+    {   //Get target_player.
         if(!getAndAssignTargets(this, player, tokens, command.get_TargetPlayerSlot(), command.get_TargetPlayerBlobParam(), target_player, target_blob))
         {
-            return false;
+            return false;//Failing to get target_player warrants stopping the command.
         }
     }		
 
@@ -374,7 +324,7 @@ bool onServerProcessChat(CRules@ this, const string& in _text_in, string& out te
 
     //return !this.get_bool(player.getUsername() + "_hidecom");
 
-	return true;//Returning sends message to chat
+	return true;//Returning true sends message to chat
 }
 
 void onCommand( CRules@ this, u8 cmd, CBitStream @params )

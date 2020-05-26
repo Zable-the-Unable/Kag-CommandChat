@@ -4,7 +4,9 @@ shared interface ICommand
 
     void RefreshVars();
     
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob);
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob);
+
+    bool canUseCommand(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob);
 
     bool isActive();
     void setActive(bool value);
@@ -40,11 +42,18 @@ shared interface ICommand
 
 class CommandBase : ICommand
 {
-    void Setup(string[]@ tokens)
+    CommandBase()
+    {
+        
+    }
+
+    //Happens every time sends a message with ! as the first character, this is done as commands may differ depending on the amount of parameters given.
+    void Setup(string[]@ tokens)//TODO - Find a more fitting name opposed to "Setup". This happens every time someone sends a message with ! as the first character. Better name please.    
     {
         error("SETUP METHOD NOT FOUND!");
     }
 
+    //Happens right before Setup(), this refreshes the variables to prevent problems.
     void RefreshVars()
     {
         permlevel = 0;
@@ -55,22 +64,96 @@ class CommandBase : ICommand
         blob_must_exist = true;
         minimum_parameter_count = 0;
     }
-    
-    bool CommandCode(CRules@ this, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob)
+    //What the command does. Happens as long as all the other checks went through.
+    bool CommandCode(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob, Vec2f pos, int team, CPlayer@ target_player, CBlob@ target_blob)
     {
         error("COMMANDCODE METHOD NOT FOUND!");
         return false;
+    }
+    //Happens before CommandCode, confirms that the player can indeed use this command.
+    bool canUseCommand(CRules@ rules, string[]@ tokens, CPlayer@ player, CBlob@ blob)
+    {
+        bool _sv_test = sv_test;
+        CSecurity@ security = getSecurity();
+
+
+        if(blob_must_exist)
+        {
+            if(blob == null)
+            {
+                sendClientMessage(rules, player, "Your blob appears to be null, this command will not work unless your blob actually exists.");
+                return false;
+            }
+        }
+
+        if(no_sv_test)
+        {
+            _sv_test = false;
+        }
+
+        //Is okay to use if in the specified gamemode.
+        if(in_gamemode == rules.gamemode_name)
+        {
+            _sv_test = true;
+        }
+
+
+        //Security check.
+        if(permlevel == Moderator && !player.isMod() && !_sv_test)
+        {
+            sendClientMessage(rules, player, "You must be a moderator or higher to use this command.");
+            return false;
+        }
+        if(permlevel == Admin && !security.checkAccess_Command(player, "admin_color") && !_sv_test)
+        {
+            sendClientMessage(rules, player, "You must be a admin or higher to use this command.");
+            return false;
+        }
+        if(permlevel == SuperAdmin && !security.checkAccess_Command(player, "ALL") && !_sv_test)
+        {
+            sendClientMessage(rules, player, "You must be a superadmin to use this command.");
+            return false;
+        }
+        if(permlevel == pFreeze && (!security.checkAccess_Command(player, "freezeid") || !getSecurity().checkAccess_Command(player, "unfreezeid")))
+        {
+            sendClientMessage(rules, player, "You do not sufficient permissions to freeze and unfreeze a player.");
+            return false;
+        }
+        if(permlevel == pKick && !security.checkAccess_Command(player, "kick"))
+        {
+            sendClientMessage(rules, player, "You do not sufficient permissions to kick a player.");
+            return false;
+        }
+        if(permlevel == punBan && !security.checkAccess_Command(player, "unban")){
+            sendClientMessage(rules, player, "You do not sufficient permissions to unban a player.");
+            return false;
+        }
+        if(permlevel == pBan && !security.checkAccess_Command(player, "ban")){
+            sendClientMessage(rules, player, "You do not sufficient permissions to ban a player.");
+            return false;
+        }
+
+
+
+        //Minimum parameter check
+        if(tokens.size() < minimum_parameter_count + 1)
+        {
+            sendClientMessage(rules, player, "This command requires at least " + minimum_parameter_count + " parameters.");
+            return false;
+        }
+
+        return true;
     }
 
     private bool active = true;//If this is false, this command is disabled and unusable.
     bool isActive() { return active; }
     void setActive(bool value) { active = value; }
 
-    private string in_gamemode = "";
+    private string in_gamemode = "xxxxx";//If the gamemode is equal to this, this command can be used.
     string inGamemode(){ return in_gamemode; }
     void setGamemode(string value) { in_gamemode = value; }
 
-    private array<int> names(4);
+    private array<int> names(4);//Names to call this command. If more than 4 are desired, use names.push_back();
     array<int> get_Names() { return names; }
     void set_Names(array<int> value) { names = value; }
 
@@ -78,15 +161,15 @@ class CommandBase : ICommand
     u16 get_PermLevel(){ return permlevel; }
     void set_PermLevel(u16 value) { permlevel = value; }
 
-    private u16 commandtype = 0;
+    private u16 commandtype = 0;//The type of command, for the moment this does nothing.
     u16 get_CommandType() { return commandtype; }
     void set_CommandType(u16 value){ commandtype = value; }
 
-    private u8 target_player_slot = 0;
+    private u8 target_player_slot = 0;//Specifies what param is expected to have a username. Gets this player and puts it into target_player
     u8 get_TargetPlayerSlot() { return target_player_slot;}
     void set_TargetPlayerSlot(u8 value) { target_player_slot = value; }
 
-    private bool target_player_blob_param = true;
+    private bool target_player_blob_param = true;//Specifies if target_blob is supposed to come with the target_player. target_player_slot must be specified for this to take effect.
     bool get_TargetPlayerBlobParam() { return target_player_blob_param; }
     void set_TargetPlayerBlobParam(bool value) { target_player_blob_param = value; }
 
